@@ -8,7 +8,14 @@
   /*#SEFCE8 #736EFE*/
 
 }
-
+a{
+    text-decoration: none;
+    color: gray;
+    background: #fff;
+    padding: 10px;
+    box-shadow: 2px 2px 4.5px rgba(0, 0, 0, 0.33);
+    border-radius: 4.5px;
+}
 .DropContainerRoot h3{
   font-size: 45px;
   font-weight: 200;
