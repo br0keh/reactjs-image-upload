@@ -1,9 +1,7 @@
-import React, { Component, useCallback} from 'react'
+import React, { Component} from 'react'
 import FileDrop from 'react-file-drop'
 import path from 'path'
 import axios from "axios";
-import { join } from 'upath';
-const fs = require('browserify-fs')
 
 
 require('./Drop.css')
@@ -34,6 +32,7 @@ export class Drop extends Component {
     setTimeout(() => {
       this.setState({
         DragText: "Drop image here to upload.",
+        FileDroped: false,
       })
     }, 2000);
     
@@ -41,12 +40,30 @@ export class Drop extends Component {
   }
   handleDrop = (files, event) => {
 
-    if (path.extname(files[0].name) !== ".png" | ".jpg" | ".gif" 
-       ) {
+    const FileInfo = {ext: ''}
+
+    if (path.extname(files[0].name) === ".png")
+    {
+      FileInfo.ext = ".png"; 
+    }
+    else if (path.extname(files[0].name) === ".jpg")
+    {
+      FileInfo.ext = ".jpg"; 
+    }
+    else if (path.extname(files[0].name) === ".gif") 
+    {
+      FileInfo.ext = ".gif"; 
+    }
+    else if (path.extname(files[0].name) === ".jpeg") 
+    {
+      FileInfo.ext = ".jpeg"; 
+    }
+    else
+    {
         console.error("File not supported.");
-        this.ShowMessage("Only images!!")
+        this.ShowMessage("Images only!")
         return;
-       }
+    }
     
     this.setState({
         MouseOver: false,
@@ -57,9 +74,11 @@ export class Drop extends Component {
     setTimeout(() => {
       console.log('Uploading...')
     }, 2000);
-      // POST to a test endpoint for demo purposes
-    const formData = new FormData();
-    formData.append("file", files[0]);
+
+
+    const formData = new FormData()
+
+    formData.append("file", files[0])
     axios.post('http://localhost:8080/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -67,11 +86,6 @@ export class Drop extends Component {
     })
     .then((res) => {
 
-      if(res.status !== 200) {
-
-        return this.ShowMessage("Fail :(");
-
-      }
       if(res.data.success) {
         console.log(res.data)
         this.setState({
@@ -84,6 +98,11 @@ export class Drop extends Component {
 
       }
       
+    })
+    .catch((err) => {
+      
+       return this.ShowMessage("Fail :(")
+
     })
   
    
@@ -110,13 +129,15 @@ export class Drop extends Component {
         { 
           normal: {
             background: 
-            this.state.FileDroped ?
-            'linear-gradient(to top left, #EEAD92, #6018DC)'
-            :
-            'linear-gradient(to top left, #736EFE, #5EFCE8)'
+              this.state.FileDroped
+              ?
+              'linear-gradient(to top left, #EEAD92, #6018DC)'
+              :
+              'linear-gradient(to top left, #736EFE, #5EFCE8)'
           },
           sucesso: {
-            background: 'linear-gradient(to top left, #81FBB8, #28c76f)' 
+            background: 
+              'linear-gradient(to top left, #81FBB8, #28c76f)' 
           }
 
       }
@@ -131,12 +152,29 @@ export class Drop extends Component {
 
         <div style={this.state.Success ? dropStyle.sucesso : dropStyle.normal } className="DropContainerRoot"> 
           
-          <h1>img<span>up</span></h1>{"\n"}
-          <h3>{this.state.DragText}</h3>
-          <br/>
-          {this.state.Success ? <p className="successUrl"><a href={this.state.Success? this.state.SuccessUrl : ""}>{this.state.Success ? this.state.SuccessUrl : ""}</a></p>
-          : <p></p>}
-          </div>
+            <h1>
+              img<span>up</span>
+            </h1>
+
+            <h3>
+              {this.state.DragText}
+            </h3>
+
+            <br/>
+
+            {
+            this.state.Success 
+            ? 
+              <p className="successUrl">
+                <a 
+                  href={this.state.Success ? this.state.SuccessUrl : ""}>{this.state.Success ? this.state.SuccessUrl : ""}
+                </a>
+              </p>
+            : 
+            <p></p>
+            }
+            
+            </div>
       
       </FileDrop>
     )

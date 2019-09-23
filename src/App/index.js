@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import path  from 'path'
 import Drop from './components/Drop/Drop'
-import Dropzone from 'react-dropzone'
 
 require('./index.css')
 
@@ -11,6 +9,7 @@ export class index extends Component {
     return (
   
       <div className="AppRoot">
+        
         <Drop/>
       </div>       
       
