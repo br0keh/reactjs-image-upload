@@ -8,7 +8,7 @@ import axios from "axios";
 require('../../stylesheets/Drop.css')
 
 
-/*  <Drop /> COMPONENT */
+/* DROP COMPONENT */
 export class Drop extends Component {
   constructor(){
     super();
@@ -133,9 +133,9 @@ export class Drop extends Component {
             background: 
               this.state.FileDroped
               ?
-              'linear-gradient(to top left, #EEAD92, #6018DC)'
+                'linear-gradient(to top left, #EEAD92, #6018DC)'
               :
-              'linear-gradient(to top left, #736EFE, #5EFCE8)'
+                'linear-gradient(to top left, #736EFE, #5EFCE8)'
           },
           sucesso: {
             background: 
@@ -165,15 +165,16 @@ export class Drop extends Component {
             <br/>
 
             {
-            this.state.Success 
-            ? 
-              <p className="successUrl">
-                <a 
-                  href={this.state.Success ? this.state.SuccessUrl : ""}>{this.state.Success ? this.state.SuccessUrl : ""}
-                </a>
-              </p>
-            : 
-            <p></p>
+                // success ?
+              this.state.Success 
+              ? //yes
+                  <p className="successUrl">
+                    <a 
+                      href={this.state.Success ? this.state.SuccessUrl : ""}>{this.state.Success ? this.state.SuccessUrl : ""}
+                    </a>
+                  </p>
+              : //no
+                <p/>
             }
             
             </div>
