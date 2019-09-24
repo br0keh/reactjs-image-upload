@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import Drop from './components/Drop/Drop'
 
-require('./index.css')
+/* stylesheet */
+require('./stylesheets/index.css')
 
 export class index extends Component {
  

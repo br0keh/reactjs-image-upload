@@ -1,14 +1,14 @@
+/* DEPENDENCIES */
 import React, { Component} from 'react'
 import FileDrop from 'react-file-drop'
 import path from 'path'
 import axios from "axios";
 
-
-require('./Drop.css')
-
-
+/*  STYLESHEETS */
+require('../../stylesheets/Drop.css')
 
 
+/*  <Drop /> COMPONENT */
 export class Drop extends Component {
   constructor(){
     super();
@@ -40,6 +40,7 @@ export class Drop extends Component {
   }
   handleDrop = (files, event) => {
 
+    /* EXTENSION FILTER */
     const FileInfo = {ext: ''}
 
     if (path.extname(files[0].name) === ".png")
@@ -76,8 +77,8 @@ export class Drop extends Component {
     }, 2000);
 
 
+    /* UPLOAD REQUEST TO API */
     const formData = new FormData()
-
     formData.append("file", files[0])
     axios.post('http://localhost:8080/upload', formData, {
           headers: {
@@ -108,6 +109,7 @@ export class Drop extends Component {
    
     
   }
+
 
   handleDragOver = (event) => {
     this.setState({
